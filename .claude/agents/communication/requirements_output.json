@@ -1,0 +1,59 @@
+{
+  "title": "エメラルドツルハシのクラフトレシピ追加",
+  "description": "EmeraldPickaxeアイテムに対して、エメラルド3個と棒2本を使用したクラフトレシピを追加する。配置パターンは標準的なツルハシレシピ（ダイヤモンドツルハシと同様）に準拠。",
+  "priority": "HIGH",
+  "complexity": "SIMPLE",
+  "technical_requirements": {
+    "blocks": [],
+    "items": [
+      {
+        "name": "EmeraldPickaxe",
+        "path": "/Users/tomoyasaito/Mods/forge-1.20.6-50.2.1-mdk/src/main/java/com/unz47/oltOreSpawn/items/tools/EmeraldPickaxe.java",
+        "status": "既存アイテム"
+      }
+    ],
+    "mechanics": [
+      {
+        "type": "crafting_recipe",
+        "recipe_type": "shaped",
+        "pattern": [
+          "EEE",
+          " S ",
+          " S "
+        ],
+        "key": {
+          "E": "minecraft:emerald",
+          "S": "minecraft:stick"
+        },
+        "result": "oltorespawn:emerald_pickaxe"
+      }
+    ],
+    "data": [
+      {
+        "file_path": "src/main/resources/data/oltorespawn/recipes/emerald_pickaxe.json",
+        "file_type": "recipe_json",
+        "format": "shaped_crafting"
+      }
+    ]
+  },
+  "implementation_steps": [
+    "1. EmeraldPickaxeアイテムがModItemsクラスに登録されていることを確認",
+    "2. data/oltorespawn/recipes/ディレクトリの存在を確認（なければ作成）",
+    "3. emerald_pickaxe.jsonレシピファイルを作成",
+    "4. 形状レシピとして、上段にエメラルド3個、中段中央と下段中央に棒を配置するパターンを定義",
+    "5. レシピの出力をoltorespawn:emerald_pickaxeに設定",
+    "6. ゲーム内でクラフトテーブルでのレシピ動作を確認"
+  ],
+  "acceptance_criteria": [
+    "クラフトテーブルでエメラルド3個と棒2本を正しい配置で並べるとEmeraldPickaxeが作成できる",
+    "レシピがレシピブックに表示される",
+    "他のツルハシレシピと同様の配置パターンである",
+    "既存のレシピと競合しない"
+  ],
+  "dependencies": [
+    "EmeraldPickaxeアイテムクラスの存在と正常な登録",
+    "ModItemsクラスでのアイテム登録",
+    "minecraft:emeraldとminecraft:stickアイテムの利用可能性"
+  ],
+  "estimated_effort": "小"
+}

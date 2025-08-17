@@ -1,0 +1,22 @@
+{
+  "workspaceSettings": {
+    "includePatterns": [
+      "**/*.java",
+      "**/*.json",
+      "**/*.gradle",
+      "**/*.md",
+      "**/*.txt",
+      "**/*.properties",
+      "**/*.toml",
+      "**/*.mcmeta"
+    ],
+    "excludePatterns": [
+      "**/build/**",
+      "**/.gradle/**",
+      "**/run/**",
+      "**/logs/**",
+      "**/crash-reports/**"
+    ]
+  },
+  "projectType": "minecraft_forge"
+}

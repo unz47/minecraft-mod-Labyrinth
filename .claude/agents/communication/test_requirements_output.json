@@ -1,0 +1,63 @@
+{
+  "title": "銅鉱石ブロック追加",
+  "description": "Minecraft MODに銅鉱石ブロックと関連アイテムを追加する機能",
+  "priority": "HIGH",
+  "complexity": "SIMPLE",
+  "technical_requirements": {
+    "blocks": [
+      {
+        "name": "Copper Ore",
+        "id": "copper_ore",
+        "hardness": 3.0,
+        "tool_requirement": "stone_pickaxe",
+        "drop_item": "raw_copper",
+        "experience": "2-5"
+      }
+    ],
+    "items": [
+      {
+        "name": "Raw Copper",
+        "id": "raw_copper",
+        "type": "basic_item",
+        "smelting_result": "copper_ingot"
+      },
+      {
+        "name": "Copper Ingot",
+        "id": "copper_ingot",
+        "type": "ingot"
+      }
+    ],
+    "mechanics": [
+      "鉱石は石ツルハシ以上で採掘可能",
+      "生の銅を精錬して銅インゴットを作成可能"
+    ],
+    "data": [
+      "loot_table: copper_ore -> raw_copper (1個)",
+      "smelting_recipe: raw_copper -> copper_ingot",
+      "mining_tags: mineable/with_pickaxe"
+    ]
+  },
+  "implementation_steps": [
+    "CopperOreBlockクラスの作成",
+    "Raw Copper, Copper Ingotアイテムクラスの作成",
+    "ModBlocks.javaへの銅鉱石登録",
+    "ModItems.javaへのアイテム登録",
+    "クリエイティブタブへの追加",
+    "JSON リソースファイルの作成",
+    "言語ファイルの更新",
+    "loot tableとtagsの設定"
+  ],
+  "acceptance_criteria": [
+    "銅鉱石がゲーム内に表示される",
+    "石ツルハシで採掘可能",
+    "採掘時に生の銅がドロップする",
+    "生の銅を精錬して銅インゴットが作成可能",
+    "クリエイティブタブで確認可能"
+  ],
+  "dependencies": [
+    "既存のOrichalcumOreBlockパターンを参考",
+    "ModBlocks.javaの登録システム利用",
+    "ModItems.javaの登録システム利用"
+  ],
+  "estimated_effort": "小"
+}

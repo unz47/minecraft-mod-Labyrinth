@@ -1,0 +1,13 @@
+{
+  "creativetab.oltorespawn_dim1": "OltOreSpawn Dim 1",
+  "creativetab.oltorespawn_dim2": "OltOreSpawn Dim 2",
+  "block.oltorespawn.orichalcum_ore": "Orichalcum Ore",
+  "item.oltorespawn.basic_ingot": "Basic Ingot",
+  "item.oltorespawn.fire_resistant_ingot": "Fire Resistant Ingot",
+  "item.oltorespawn.durable_ingot": "Durable Ingot",
+  "item.oltorespawn.emerald_pickaxe": "Emerald Pickaxe",
+  "item.oltorespawn.emerald_axe": "Emerald Axe",
+  "item.oltorespawn.emerald_hoe": "Emerald Hoe",
+  "item.oltorespawn.emerald_sword": "Emerald Sword",
+  "item.oltorespawn.emerald_shovel": "Emerald Shovel"
+}

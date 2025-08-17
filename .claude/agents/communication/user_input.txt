@@ -1,0 +1,1 @@
+ /Users/tomoyasaito/Mods/forge-1.20.6-50.2.1-mdk/src/main/java/com/unz47/oltOreSpawn/items/tools/EmeraldPickaxe.javaに対するレシピを追加してください。レシピはエメラルド３つと棒２つで、並び方はダイヤモンドピッケルと同じにして

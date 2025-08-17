@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "labyrinth:block/orichalcum_ore"
+  }
+}
