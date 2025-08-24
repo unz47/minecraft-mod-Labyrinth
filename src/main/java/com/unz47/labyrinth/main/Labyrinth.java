@@ -1,5 +1,6 @@
 package com.unz47.labyrinth.main;
 
+import com.unz47.labyrinth.dimension.ModDimensions;
 import com.unz47.labyrinth.regi.ModBlocks;
 import com.unz47.labyrinth.regi.ModCreativeTabs;
 import com.unz47.labyrinth.regi.ModItems;
@@ -19,6 +20,7 @@ public class Labyrinth {
         ModBlocks.register(modEventBus);
         ModItems.register(modEventBus);
         ModCreativeTabs.register(modEventBus);
+        ModDimensions.register();
         
         MinecraftForge.EVENT_BUS.register(this);
     }

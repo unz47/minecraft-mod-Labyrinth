@@ -1,6 +1,7 @@
 package com.unz47.labyrinth.regi;
 
 import com.unz47.labyrinth.blocks.OrichalcumOreBlock;
+import com.unz47.labyrinth.blocks.GlowstonePortalBlock;
 import com.unz47.labyrinth.main.Labyrinth;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -18,6 +19,9 @@ public class ModBlocks {
     
     public static final RegistryObject<Block> ORICHALCUM_ORE = registerBlock("orichalcum_ore",
             OrichalcumOreBlock::new);
+    
+    public static final RegistryObject<Block> GLOWSTONE_PORTAL = BLOCKS.register("glowstone_portal",
+            GlowstonePortalBlock::new);
     
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);
