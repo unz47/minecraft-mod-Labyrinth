@@ -106,6 +106,7 @@ public class GlowstonePortalBlock extends Block {
     
     private static BlockPos findOrCreateSinglePortal(ServerLevel destWorld, boolean goingToOreDimension, BlockPos sourcePortalPos) {
         System.out.println("Finding or creating single portal in " + destWorld.dimension());
+        System.out.println("Source portal position: " + sourcePortalPos);
         
         // 目的地ディメンションの既存ポータルを確認
         BlockPos existingPortal = goingToOreDimension ? 
@@ -117,9 +118,25 @@ public class GlowstonePortalBlock extends Block {
             return existingPortal;
         }
         
-        // 既存ポータルがない場合は新しく作成（元のポータル位置を参考にする）
-        System.out.println("No existing portal found, creating new portal near source position");
-        BlockPos referencePos = new BlockPos(sourcePortalPos.getX(), 70, sourcePortalPos.getZ());
+        // 既存ポータルがない場合は新しく作成（元のポータルと同じ高さを維持）
+        System.out.println("No existing portal found, creating new portal at same height");
+        
+        // 座標スケールを考慮（ネザー風ディメンションは8倍スケール）
+        int destX = goingToOreDimension ? sourcePortalPos.getX() / 8 : sourcePortalPos.getX() * 8;
+        int destZ = goingToOreDimension ? sourcePortalPos.getZ() / 8 : sourcePortalPos.getZ() * 8;
+        int destY = sourcePortalPos.getY(); // Y座標は同じ高さを維持
+        
+        // ディメンションの高さ制限内に収める
+        if (goingToOreDimension) {
+            // Ore Dimensionは0-128の高さ制限
+            destY = Math.max(5, Math.min(destY, 122)); // ポータル構造のための余裕を確保
+        } else {
+            // Overworldは-64-320の高さ制限
+            destY = Math.max(-59, Math.min(destY, 315));
+        }
+        
+        BlockPos referencePos = new BlockPos(destX, destY, destZ);
+        System.out.println("Creating portal at calculated position: " + referencePos);
         BlockPos newPortalPos = createNewPortal(destWorld, referencePos);
         
         // ポータル位置を登録
@@ -264,8 +281,8 @@ public class GlowstonePortalBlock extends Block {
     
     
     private static BlockPos createNewPortal(ServerLevel level, BlockPos originalPos) {
-        // 安全な場所を見つける
-        BlockPos safePos = findSafeSpot(level, originalPos);
+        // 指定された高さで安全な場所を作る
+        BlockPos safePos = ensureSafeSpot(level, originalPos);
         
         // 4x5ポータルを作成
         createPortalStructure(level, safePos);
@@ -273,20 +290,35 @@ public class GlowstonePortalBlock extends Block {
         return safePos.offset(1, 1, 0); // ポータル内部の位置を返す
     }
     
-    private static BlockPos findSafeSpot(ServerLevel level, BlockPos preferredPos) {
-        // 地面の高さを見つける
+    private static BlockPos ensureSafeSpot(ServerLevel level, BlockPos preferredPos) {
+        // 指定された高さをそのまま使用（地形を無視して作成）
         BlockPos.MutableBlockPos mutablePos = preferredPos.mutable();
         
-        // 地表を探す
-        for (int y = level.getMaxBuildHeight() - 1; y >= level.getMinBuildHeight(); y--) {
-            mutablePos.setY(y);
-            if (!level.getBlockState(mutablePos).isAir() && level.getBlockState(mutablePos.above()).isAir()) {
-                return mutablePos.above().immutable();
+        // ポータル構造のための空間をクリア（7x7x7の範囲）
+        for (int x = -3; x <= 3; x++) {
+            for (int y = -1; y <= 5; y++) {
+                for (int z = -3; z <= 3; z++) {
+                    BlockPos clearPos = mutablePos.offset(x, y, z);
+                    // 岩盤は破壊しない
+                    if (!level.getBlockState(clearPos).is(Blocks.BEDROCK)) {
+                        level.setBlock(clearPos, Blocks.AIR.defaultBlockState(), 3);
+                    }
+                }
             }
         }
         
-        // 地表が見つからない場合はY=70に設定
-        return new BlockPos(preferredPos.getX(), 70, preferredPos.getZ());
+        // ポータルの下に足場を作成（エンドストーンで3x3のプラットフォーム）
+        for (int x = -1; x <= 4; x++) {
+            for (int z = -1; z <= 1; z++) {
+                BlockPos platformPos = mutablePos.offset(x, -1, z);
+                // 岩盤でない場合のみ設置
+                if (!level.getBlockState(platformPos).is(Blocks.BEDROCK)) {
+                    level.setBlock(platformPos, Blocks.END_STONE.defaultBlockState(), 3);
+                }
+            }
+        }
+        
+        return mutablePos.immutable();
     }
     
     private static void createPortalStructure(ServerLevel level, BlockPos basePos) {
